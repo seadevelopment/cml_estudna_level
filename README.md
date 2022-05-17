@@ -5,6 +5,8 @@ Pro Python:
 - upravte na začátku souboru v části "Configuration" vaše přihlašovací údaje a SN vaší eStudny.
 - spusťte
 
-d:\> python estudna.py
+```
+c:\> python estudna.py
 Device: SB821035
 Water level: 2.805
+```
