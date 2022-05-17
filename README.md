@@ -1,2 +1,1 @@
-# cml_estudna_level
-Read current value of level of you eStudna
+# Příklad na zjištění aktuální hodnoty hladiny vaší eStudny z CML 
