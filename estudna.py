@@ -99,22 +99,6 @@ class ThingsBoard:
         return response
     
 
-    def setDeviceOutput(self, deviceId, keys, value):
-        data = {"params": {}}
-        if value:
-            data["params"]["value"] = 1
-        else:
-            data["params"]["value"] = 0
-        if keys == "OUT1":
-            data["method"] = "setDout1"
-        else:
-            data["method"] = "setDout2"
-        url = f'{self.server}/api/rpc/twoway/{deviceId}'
-        response = httpPost(url, {'X-Authorization': f"Bearer {self.userToken}"}, params={}, data=data)
-
-        return response
-
-
 def eStudna_GetWaterLevel(username: str, password: str, serialNumber: str) -> float:
     """
     Cteni hladiny ve studni
@@ -124,14 +108,6 @@ def eStudna_GetWaterLevel(username: str, password: str, serialNumber: str) -> fl
     user_devices = tb.getDevicesByName(f"%{serialNumber}")
     values = tb.getDeviceValues(user_devices[0]["id"]["id"], "ain1")
     return values["ain1"][0]["value"]
-
-def eStudna_SetOutput(username: str, password: str, serialNumber: str, state: bool, key: str) -> bool:
-    tb = ThingsBoard()
-    tb.login(username, password)
-    user_devices = tb.getDevicesByName(f"%{serialNumber}")
-    return tb.setDeviceOutput(user_devices[0]["id"]["id"], key, state)
-
-
 
 
 # ----------------------------------------------------------------------------
