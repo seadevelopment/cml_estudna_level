@@ -13,9 +13,9 @@ import json
 # ----------------------------------------------------------------------------
 
 # --- Configuration
-username = 'forez09@gmail.com'
-password = 'polkpolk'
-sn = 'SB823013'   # Serial number of your eSTUDNA
+username = 'zakaznik@gmail.com'
+password = 'heslo'
+sn = 'SB432100'   # Serial number of your eSTUDNA
 
 
 # ----------------------------------------------------------------------------
