@@ -13,9 +13,9 @@ import json
 # ----------------------------------------------------------------------------
 
 # --- Configuration
-username = 'user@email.com'
-password = 'supersecretpassword'
-sn = 'SB821035'   # Serial number of your eSTUDNA
+username = 'forez09@gmail.com'
+password = 'polkpolk'
+sn = 'SB823013'   # Serial number of your eSTUDNA
 
 
 # ----------------------------------------------------------------------------
@@ -28,7 +28,8 @@ def httpPost(url, header={}, params={}, data={}):
       "Accept": "application/json",
       **header
     }
-    r = requests.post(url=url, data=json.dumps(data), headers=headers, params=params) 
+    data=json.dumps(data)
+    r = requests.post(url=url, data=data, headers=headers, params=params)
     r.raise_for_status()
 
     return r.json()
@@ -96,6 +97,22 @@ class ThingsBoard:
         response = httpGet(url, {'X-Authorization': f"Bearer {self.userToken}"}, params=params)
 
         return response
+    
+
+    def setDeviceOutput(self, deviceId, keys, value):
+        data = {"params": {}}
+        if value:
+            data["params"]["value"] = 1
+        else:
+            data["params"]["value"] = 0
+        if keys == "OUT1":
+            data["method"] = "setDout1"
+        else:
+            data["method"] = "setDout2"
+        url = f'{self.server}/api/rpc/twoway/{deviceId}'
+        response = httpPost(url, {'X-Authorization': f"Bearer {self.userToken}"}, params={}, data=data)
+
+        return response
 
 
 def eStudna_GetWaterLevel(username: str, password: str, serialNumber: str) -> float:
@@ -108,12 +125,21 @@ def eStudna_GetWaterLevel(username: str, password: str, serialNumber: str) -> fl
     values = tb.getDeviceValues(user_devices[0]["id"]["id"], "ain1")
     return values["ain1"][0]["value"]
 
+def eStudna_SetOutput(username: str, password: str, serialNumber: str, state: bool, key: str) -> bool:
+    tb = ThingsBoard()
+    tb.login(username, password)
+    user_devices = tb.getDevicesByName(f"%{serialNumber}")
+    return tb.setDeviceOutput(user_devices[0]["id"]["id"], key, state)
+
+
+
 
 # ----------------------------------------------------------------------------
 # --- Main code
 # ----------------------------------------------------------------------------
 
 level = eStudna_GetWaterLevel(username, password, sn)
+print(f"Output 1: {eStudna_SetOutput(username, password, sn, True, 'OUT1')}")
 print(f"Device: {sn}")
 print(f"Water level: {level}")
 
