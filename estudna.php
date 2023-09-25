@@ -12,9 +12,9 @@
 // ----------------------------------------------------------------------------
 
 // --- Configuration
-$user = 'user@email.com';
-$password = 'supersecretpassword';
-$sn = 'SB821035';   // Serial number of your eSTUDNA
+$user = 'zakaznik@email.com';
+$password = 'heslo';
+$sn = 'SB819098';   // Serial number of your eSTUDNA
 
 
 
